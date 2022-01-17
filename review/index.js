@@ -98,11 +98,70 @@ function myApply() {
  */
 ///**************************************************** */
 /**
- * selectSort 选择
+ * selectSort 选择:从i d到n-1 选择最小的值 放到i的位置
  */
+function swap(arr,i,j){
+    let t = arr[i]
+    arr[i] = arr[j]
+    arr[j]= t
+
+}
+function swap1(arr,i,j){
+    arr[i]= arr[i]^arr[j]
+    arr[j]= arr[i]^arr[j]
+    arr[i]= arr[i]^arr[j]
+
+}
+function selectSort(arr){
+    console.log("start")
+    for(let i = 0;i<arr.length;i++){
+        for(let j = i+1;j<arr.length;j++){
+            if(arr[j]<arr[i]){
+                swap(arr,i,j)
+            }
+        }
+    }
+    return arr
+}
+
+///**************************************************** */
+//除了归并排序NlogN，其他都是N平方
+/**
+ * 冒泡排序 ：谁大谁往后移动
+ */
+ function popSort(arr){
+    for(let i = arr.length;i>=0;i--){
+        for(let j = 0;j<i;j++){
+            if(arr[j]>arr[j+1]){
+                swap(arr,j,j+1)
+            }
+        }
+    }
+    return arr
+}
+///**************************************************** */
+/**
+ * 
+ * @param {插入排序}  :分别做到0到1、2、3、n 位置有序,往前对比,抓牌插入
+ * @returns 
+ */
+function insertSort(arr){
+    for(let i =1 ;i<arr.length;i++){
+        for(let j = i-1;j>=0&&arr[j]>arr[j+1];j--){
+            swap(arr,j,j+1)
+        }
+    }
+    return arr
+}
+console.log(insertSort([3,4,2,1,5,6,2,8,3]))
+
 ///**************************************************** */
 /**
  * qurSort 二分
+ */
+///**************************************************** */
+/**
+ * mergeSort 归并排序
  */
 ///**************************************************** */
 /**
@@ -275,13 +334,13 @@ function toLine(name) {
  * promise:为了解决hiu diao
  */
 
-var p = new Promise(function (resolve, reject) {
-    console.log("start")
-    setTimeout(() => { resolve(1) }, 2000)
-})
-p.then(function (res) {
-    console.log(res)
-}, function (err) { }).then()
+// var p = new Promise(function (resolve, reject) {
+//     console.log("start")
+//     setTimeout(() => { resolve(1) }, 2000)
+// })
+// p.then(function (res) {
+//     console.log(res)
+// }, function (err) { }).then()
 
 const PENDING = "pending"
 const FULFILLED = "fulfilled"
@@ -412,6 +471,8 @@ MyPromise.race = function(promises){
     })
 }
 // Promise.any
+///**************************************************** */
+
 function listNode(val){
     this.val = val
     this.next = null
@@ -459,7 +520,7 @@ list.prototype.reverse= function(){
 // test.print()
 // test.reverse()
 // test.print()
-
+///**************************************************** */
 /**
  * 回文字符串
  */
@@ -479,6 +540,7 @@ function testHW(str){
     return true
 }
 // console.log(testHW("abcncba"))
+///**************************************************** */
 /**
  * 斐波那契 fn = fn-1 + fn-2
  */
@@ -488,21 +550,27 @@ function fbnq(n){
 }
 // console.log(fbnq(8))
 
-//除了归并排序NlogN，其他都是N平方
-/**
- * 冒泡排序 ：
- */
-function popSort(arr){
-
-}
-
-/**
- * 选择排序
- */
-
-function selectSort(arr){
-
-}
-console.log(popSort([6,3,6,8,4,2,0,7]))
+///**************************************************** */
 //substr 是开始和长度，substring 是开始和结束位置 slice 和substring 差不多 可以使用负数
 
+/**
+ * 最长不重复子串
+ */
+function lengthOfLongestStr(str){
+    let rightIndex = 0;
+    let max = 0
+    let temp = new Set()
+    for(let i =0;i<str.length;i++){
+        if(i!=0){
+            temp.delete(str.charAt(i-1))
+        }
+        while(rightIndex < str.length && !temp.has(str.charAt(rightIndex))){
+            temp.add(str.charAt(rightIndex))
+            rightIndex++
+
+        }
+        max = Math.max(max,rightIndex -i)
+    }
+    return max
+}
+// console.log(lengthOfLongestStr('abccasda'))
