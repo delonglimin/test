@@ -92,7 +92,7 @@ var combinationSum3 = function (num, k, n) {
             return;
         }
 
-        for (let i = start + 1; i < num; i++) {
+        for (let i = start + 1; i < num.length; i++) {
             dfs(i, [...arr, i], sum + i);
         }
     };
@@ -343,6 +343,7 @@ function getMaxDistance(head) {
 
 }
 //  判断是否是完全二叉树，左节点不为空，右节点为空的话，已经出现了有空子树的节点了，后面出现的必须为叶节点（左右子树都为空
+// 写个开关标注是否出现了左节点不为空，右节点为空
 //是不是平衡二叉树,如果左树右树都是平衡树，并且高度差不大于1，则返回true
 function checkBalance(node) {
     let result = process(node)

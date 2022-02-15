@@ -109,13 +109,13 @@ var longestCommonPrefix = function (strs) {
 };
 //合并两个有序链表
 var mergeTwoLists = function (list1, list2) {
-    if(list1 == null && list2==null){
+    if (list1 == null && list2 == null) {
         return null
     }
-    if(list1 == null && list2!==null){
+    if (list1 == null && list2 !== null) {
         return list2
     }
-    if(list1 !== null && list2==null){
+    if (list1 !== null && list2 == null) {
         return list1
     }
     let index1 = list1
@@ -125,21 +125,21 @@ var mergeTwoLists = function (list1, list2) {
     while (index1 != null & index2 != null) {
         if (index1.val < index2.val) {
             if (!result) {
-               result = index1
-               temp = result
-            } else{
+                result = index1
+                temp = result
+            } else {
                 temp.next = index1
-                temp= temp.next
+                temp = temp.next
             }
 
             index1 = index1.next
         } else {
             if (!result) {
                 result = index2
-                temp= result
+                temp = result
             } else {
                 temp.next = index2
-                temp= temp.next
+                temp = temp.next
 
             }
             index2 = index2.next
@@ -152,4 +152,41 @@ var mergeTwoLists = function (list1, list2) {
         temp.next = index2
     }
     return result
+};
+
+//二叉树是否对称
+//两棵树根节点一样，每个树的右子树与另一个树的左子树 对称
+
+function check(node1, node2) {
+    if (node1 == null && node2 == null) {
+        return true
+    }
+    if (node1 == null || node2 == null) {
+        return false
+    }
+    return (node1.val == node2.val && check(node1.left, node2.right) && check(node1.right, node2.left))
+}
+//开跟方
+var mySqrt = function (x) {
+    let result = 1
+    let num = 1
+    while (num <= x) {
+        result++
+        num = result * result
+    }
+    return result - 1
+};
+//爬楼梯
+var climbStairs = function (n) {
+    if (n < 1) {
+        return 0
+    }
+    if (n == 1) {
+        return 1
+    }
+    if (n == 2) {
+        return 2
+    }
+    return climbStairs(n - 1) + climbStairs(n - 2)
+    
 };
