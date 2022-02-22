@@ -9,6 +9,47 @@ var twoSum = function (nums, target) {
     }
     return []
 };
+
+function tosum(nums,target) {
+    let map = new Map()
+    for(let i =0;i<nums.length;i++){
+        let temp = target-nums[i]
+        if(map.has(temp)){
+            return [map.get(temp),i]
+        }else{
+            map.set(temp,i)
+        }
+    }
+    return []
+}
+
+function linkSum(l1,l2) {
+    let dummp = new listNode()
+    let cur = dummp
+    let jinwei = 0
+    while(l1 != null || l2 != null){
+        let sum = 0
+        if(l1 != null){
+            sum += l1.val
+            l1 = l1.next
+        }
+        if(l2 != null){
+            sum += l2.val
+            l2 = l2.next
+        }
+        sum += jinwei
+        jinwei = sum / 10 
+        cur.next = new listNode(sum % 10 )
+        cur = cur.next
+    }
+    if(jinwei != 0){
+        cur.next= new listNode(jinwei)
+    }
+    return dummp.next
+}
+
+
+
 /**
  * @param {string} s罗马数字转整数
  * @return {number}
@@ -75,7 +116,7 @@ var romanToInt = function (s) {
 };
 
 /**
- * @param {string[]} strs
+ * @param {string[]} strs最长公共前缀
  * @return {string}
  */
 var longestCommonPrefix = function (strs) {
@@ -190,3 +231,148 @@ var climbStairs = function (n) {
     return climbStairs(n - 1) + climbStairs(n - 2)
     
 };
+
+var rotate = function(matrix) {
+    let [m,n]=[matrix.length,matrix[0].length]
+    let temp =  new Array()
+    for(let i=m-1;i>=0;i--){
+        for(let j =0;j<n;j++){
+            console.log(matrix[i][j])
+        }
+    }
+};
+
+var reverseKGroup = function(head, k) {
+
+    let copyHead = head
+    let index =0
+    while(copyHead){
+        copyHead = copyHead.next
+        index ++
+    }
+    if(index<k){
+        return head
+    }
+    let pre = null
+    let cur = head
+
+    let n = k
+    while(cur != null && n-->0){
+        let temp = cur.next
+        cur.next = pre
+        pre = cur
+        cur = temp
+    }
+    head.next = reverseKGroup(next,k)
+    return head
+}
+// console.log(rotate([[1,2,3],[4,5,6],[7,8,9]]))
+//两个字符串相乘
+//num[i]*num[j]就是res[i+j] 和res[i+j+1]的位置
+function xiangcheng(num1,num2) {
+    let m = num1.length
+    let n = num2.length
+    let result = new Array(m+n).fill(0)
+    for(let i =m-1;i>=0;i--){
+        for(let j = n-1;j>=0;j--){
+            let temp = (num1[i]-0)*(num2[j]-0)
+            let p1 = i+j
+            let p2 = i+j+1
+            let sum = temp + result[p2]
+            result[p2]=sum%10
+            result[p1]+=parseInt(sum/10)
+        }
+    }
+}
+
+/**
+ * 三数之和
+ * @param {*} nums 
+ */
+var threeSum = function(nums) {
+    let result = []
+    function dfs(start,arr,sum) {
+        if(arr.length==3 && sum ==0){
+            result.push(arr)
+        }
+        if(arr.length>3){
+            return
+        }
+        for(let i =start;i<nums.length;i++){
+            dfs(i,[...arr,nums[i]],sum+nums[i])
+        }
+    }
+
+    dfs(0,[],0)
+    return result
+};
+
+var combinationSum3 = function (num, k, n) {
+    const ret = [];
+    const dfs = ( arr, sum,getIndex) => {
+        if (arr.length === k && sum === n) {
+            ret.push(arr);
+            return;
+        }
+        if (arr.length > k || sum > n) {
+            return;
+        }
+
+        for (let i = 0 ; i < num.length; i++) {
+            if (!!getIndex[i]) continue; // 如果存在，则代表已经有这个值了
+            getIndex[i] = 1;
+            dfs([...arr, num[i]], sum + num[i],getIndex);
+            getIndex[i] = 0;
+
+        }
+    };
+    const getIndexArr = new Array(num.length)
+    dfs([], 0,getIndexArr);
+    return ret
+};
+console.log(combinationSum3([1,3,5,6,2],3,10))
+
+function allZH(nums) {
+    let ret = []
+    const dfs = (arr, getIndex) => {
+        if (arr.length === nums.length) {
+            ret.push(arr);
+            return;
+        }
+        for (let i = 0; i < nums.length; i++) {
+            if (!!getIndex[i]) continue; // 如果存在，则代表已经有这个值了
+            getIndex[i] = 1;
+            dfs([...arr, nums[i]],getIndex);
+            getIndex[i] = 0;
+        }
+    }
+    const getIndexArr = new Array(nums.length)
+    dfs([], getIndexArr);
+    return ret;
+}
+// console.log(allZH([3,1,2]))
+
+//
+function add1(arr) {
+    let cur = arr.length -1 
+    let jinwei =0
+    if(arr[cur]+1==10){
+        arr[cur] =0
+        jinwei = 1
+        cur --
+    }
+    
+    while(jinwei == 1 && cur>=0){
+        if(arr[cur]+jinwei==10){
+            arr[cur] =0
+            jinwei = 1
+        }else{
+            jinwei = 0
+            arr[cur] =arr[cur]+jinwei
+        }
+    }
+    if(jinwei == 1){
+        arr.unshift(1)
+    }
+    return arr
+}
